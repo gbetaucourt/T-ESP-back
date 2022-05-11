@@ -1,0 +1,47 @@
+version: "3"
+services:
+    app:
+        container_name: app
+        restart: always
+        build: .
+        ports:
+        - "4000:4000"
+        links:
+        - mongo
+
+    mongo:
+        container_name: mongo
+        image: mongo
+        volumes:
+        - ./data:/data/db
+        ports:
+        - "27017:27017"
+    
+    mongo-backup:
+        container_name: mongo-backup
+        image: tiredofit/mongodb-backup
+        links:
+        - mongo
+        volumes:
+        - ./backups:/backups
+        environment:
+        - DB_HOST=example-db
+        - DB_DUMP_FREQ=1440
+        - DB_DUMP_BEGIN=0000
+        - DB_CLEANUP_TIME=8640
+        - MD5=TRUE
+        - COMPRESSION=XZ
+
+        restart: always
+    # admin_panel:
+    #     container_name: admin_panel
+    #     restart: always
+    #     image: mongo-express
+    #     ports:
+    #       - "127.0.0.1:8081:8081"
+    #     # environment:
+    #     #   ME_CONFIG_BASICAUTH_USERNAME: root
+    #     #   ME_CONFIG_BASICAUTH_PASSWORD: f11536bee899541aa233f5c0aa98f625
+    #     links:
+    #       - mongo
+    

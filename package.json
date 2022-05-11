@@ -1,0 +1,47 @@
+{
+    "name": "node-mongo-registration-login-api",
+    "version": "1.0.0",
+    "description": "NodeJS + MongoDB API for User Management, Authentication and Registration",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cornflourblue/node-mongo-registration-login-api.git"
+    },
+    "scripts": {
+        "start": "node ./server.js",
+        "start:dev": "nodemon ./server.js",
+        "test": "jest --setTimeout=50000 --watchAll --verbose --coverage"
+    },
+    "jest": {
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ]
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.1",
+        "connect-flash": "^0.1.1",
+        "cors": "^2.8.5",
+        "csurf": "^1.11.0",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.1",
+        "express-jwt": "^6.1.0",
+        "express-session": "^1.17.2",
+        "flash": "^1.1.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^3.7.3",
+        "mongoose": "^5.13.13",
+        "morgan": "^1.10.0",
+        "mqtt": "^4.3.6",
+        "rootpath": "^0.1.2",
+        "swagger-ui-dist": "^4.8.1",
+        "swagger-jsdoc": "^6.1.0",
+        "swagger-ui-express": "^4.3.0",
+        "unirest": "^0.6.0"
+    },
+    "devDependencies": {
+        "jest": "^27.5.1",
+        "nodemon": "^2.0.15",
+        "supertest": "^6.2.2"
+    }
+}

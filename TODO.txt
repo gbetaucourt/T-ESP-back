@@ -1,0 +1,8 @@
+route:
+Led, lamp, humidity, temperature, luminosity
+
+ecoute: ledStatus, lampStatus
+
+à faire: route humidity
+ajouter route /lamp/status -> automatisation
+corriger /user/update

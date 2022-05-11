@@ -1,0 +1,83 @@
+stages:
+    - test
+    # - build
+    - deploy
+
+variables:
+    DEV: dev_dhomotic-back
+    PROD: dhomotic-back
+
+default:
+    before_script:
+        - echo "Hello, $GITLAB_USER_LOGIN!"
+
+tests:
+    stage: test
+    variables:
+        ENVIRONMENT: dev
+        GIT_STRATEGY: clone
+    before_script:
+        - npm install
+        - echo "This job pulls something from the $CI_COMMIT_BRANCH branch."
+    script:
+        - npm run test
+    when: always
+    tags:
+        - test
+
+deploy_dev:
+    stage: deploy
+    variables:
+        ENVIRONMENT: production
+        GIT_STRATEGY: none
+    before_script:
+        - echo "This job deploys preprod envt from the $CI_COMMIT_BRANCH branch."
+        - cd /home/ubuntu/$DEV
+        - git fetch
+        - git stash
+        - git checkout $CI_COMMIT_BRANCH
+        - git pull origin $CI_COMMIT_BRANCH
+    script:
+        - npm install
+        - screen -S $DEV -X quit
+        - screen -dmS $DEV
+        - screen -S $DEV -p 0 -X stuff "npm run start^M"
+
+    after_script:
+        - cd /home/ubuntu/$DEV
+        - npm run test
+    environment:
+        name: dev
+        url: http://15.236.107.114:4040
+    when: manual
+    tags: 
+        - dev
+        
+deploy_prod:
+    stage: deploy
+    variables:
+        ENVIRONMENT: production
+        GIT_STRATEGY: none
+    before_script:
+        - echo "This job deploys preprod envt from the $CI_COMMIT_BRANCH branch."
+        - cd /home/ubuntu/$PROD
+        - git fetch
+        - git stash
+        - git checkout $CI_COMMIT_BRANCH
+        - git pull origin $CI_COMMIT_BRANCH
+    script:
+        - npm install
+        - screen -S $PRD -X quit
+        - screen -dmS $PROD
+        - screen -S $PROD -p 0 -X stuff "npm run start^M"
+    after_script:
+        - cd /home/ubuntu/$PROD
+        - npm run test
+    environment:
+        name: prod
+        url: http://15.236.107.114:4000
+    only:
+        - master
+    when: manual
+    tags:
+        - prod

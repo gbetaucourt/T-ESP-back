@@ -1,0 +1,318 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: 'ESP'
+  contact: {}
+host: 127.0.0.1
+basePath: /
+securityDefinitions: {}
+schemes:
+- https
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /users/update:
+    put:
+      summary: Update
+      tags:
+      - Users
+      operationId: UpdateUser
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/RegisterRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users/register:
+    post:
+      summary: Register
+      tags:
+      - Users
+      operationId: Register
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/RegisterRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users/authenticate:
+    post:
+      summary: Authenticate
+      tags:
+      - Users
+      operationId: Authenticate
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AuthenticateRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users/current:
+    get:
+      summary: Get current
+      tags:
+      - Users
+      operationId: Getcurrent
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users/:
+    get:
+      summary: Get all
+      tags:
+      - Users
+      operationId: Getall
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /widget/create:
+    post:
+      summary: Create Widget
+      tags:
+      - Widgets
+      operationId: CreateWidget
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreateWidgetRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /widget/mine:
+    get:
+      summary: Get all Widgets
+      tags:
+      - Widgets
+      operationId: GetallWidgets
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /widget/{id}:
+    get:
+      summary: Get widget by ID
+      tags:
+      - Widgets
+      operationId: GetwidgetbyID
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /widget/update:
+    post:
+      summary: Update widget
+      tags:
+      - Widgets
+      operationId: Updatewidget
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UpdatewidgetRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+definitions:
+  RegisterRequest:
+    title: RegisterRequest
+    example:
+      username: example
+      password: example
+      firstName: example
+      lastName: example
+      language: example
+      zipcode: "75000"
+      email: example@example.com
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      language:
+        type: string
+      zipcode:
+        type: string
+      email:
+        type: string
+    required:
+    - username
+    - password
+    - firstName
+    - lastName
+    - language
+    - zipcode
+    - email
+  AuthenticateRequest:
+    title: AuthenticateRequest
+    example:
+      username: example
+      password: example
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+    required:
+    - username
+    - password
+  CreateWidgetRequest:
+    title: CreateWidgetRequest
+    example:
+      userId: 60f193e374f170119345609a
+      name: example
+      configType: example
+      configValue: example
+    type: object
+    properties:
+      userId:
+        type: string
+      name:
+        type: string
+      configType:
+        type: string
+      configValue:
+        type: string
+    required:
+    - userId
+    - name
+    - configType
+    - configValue
+  UpdatewidgetRequest:
+    title: UpdatewidgetRequest
+    example:
+      name: exampl2e
+      configType: example
+      configValue: example
+      id: 61448c2b9fb1c990c569b143
+    type: object
+    properties:
+      name:
+        type: string
+      configType:
+        type: string
+      configValue:
+        type: string
+      id:
+        type: string
+    required:
+    - name
+    - configType
+    - configValue
+    - id
+tags:
+- name: Users
+  description: ''
+- name: Widget
+  description: ''
+
